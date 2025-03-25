@@ -5,6 +5,8 @@ soup/
 download/
 anexos_I_e_II*
 
+extracted_data/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -64,3 +64,13 @@ Tempo médio de 50 iterações:
 ```
 Logo, o restante do processo será usando Scrapy.
 
+## Teste de Transformação de dados
+#### Instalação de requisitos
+Para começar esse teste, será necessário a instalação das seguintes bibliotecas `pandas`, `tabula` e uma versão do Java (será necessário adicionar ao $PATH ou reiniciar o sistema), e o `JPype1` para o tabula conseguir acessar o java.
+```bash
+sudo pacman -S jdk-openjdk openjdk-doc openjdk-src
+
+source webscrap/bin/activate # Iniciar o ambiente virtual (se já não estiver ativo)
+
+pip install pandas tabula-py JPype1
+```
