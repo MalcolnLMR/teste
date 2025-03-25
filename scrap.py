@@ -1,5 +1,5 @@
 import os, requests, scrapy, shutil, time
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urljoin
 
 debug = False
 
