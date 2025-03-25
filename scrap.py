@@ -62,12 +62,14 @@ def download_resource(url, save_folder=".", filecounter="I"):
     else:
         if debug: print(f"Erro ao fazer download: {url}")
 
-def compact_downloaded_files():
+def compact_downloaded_files(save_folder="."):
+    if not os.path.exists(save_folder) and not save_folder == ".":
+        os.makedirs(save_folder)
     if debug: print("Compactando arquivos")
-    shutil.make_archive("anexos_I_e_II", 'zip', "download_pdf")    
+    shutil.make_archive(os.path.join(save_folder, "anexos_I_e_II"), 'zip', "download_pdf")
     if debug: print("Arquivos compactados\n Finalizando programa")
 
 
 if __name__ == "__main__":
     get_pdf_link_scrapy("https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos")
-    compact_downloaded_files()
+    compact_downloaded_files("out")
