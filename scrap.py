@@ -27,10 +27,10 @@ def get_pdf_link_scrapy(url):
             
             if debug: print(f"Link encontrado: {urljoin(url, link_xpath)}")
 
-            download_resource(urljoin(url, link_xpath), "download")
+            download_resource(urljoin(url, link_xpath), "download", "II" if "Anexo_II" in link_xpath else "I") 
     return None
 
-def download_resource(url, save_folder="."):
+def download_resource(url, save_folder=".", filecounter="I"):
 
     if debug: print("Verificando se a pasta existe")
 
@@ -45,7 +45,7 @@ def download_resource(url, save_folder="."):
     if response.status_code == 200:
         if debug: print("Requisição feita com sucesso")
 
-        filename = os.path.join(save_folder, os.path.basename(urlparse(url).path))
+        filename = os.path.join(save_folder, os.path.basename(f"Anexo_{filecounter}.pdf"))
 
         if os.path.isdir(filename):
             filename = os.path.join(filename, "downloaded_file")
