@@ -97,6 +97,8 @@ $ MariaDB [(none)]> source /home/malcolnlmr/git/teste-de-nivelamento/query_anali
 De longe o teste mais difícil de ser feito, foi desenvolvido nas pastas `frontend` e `backend`.
 
 ### Como executar
+é necessário ter executado o Teste 3 primeiro.
+
 #### Backend
 vá até a pasta `backend` e execute o seguite comando para iniciar o servidor:
 ```bash
