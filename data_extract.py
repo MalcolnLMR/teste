@@ -1,6 +1,6 @@
 import tabula, os
 
-def extract_data(filename, file_folder="download", save_folder="extracted_data", auto_save=False):
+def extract_data(filename, file_folder="download_pdf", save_folder="extracted_data", auto_save=False):
     if not os.path.exists(save_folder) and not save_folder == ".":
         os.makedirs(save_folder)
 
