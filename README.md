@@ -1,4 +1,125 @@
 # Readme
+Resumo dos arquivos e conclusão do teste
+
+## Configurar Ambiente de testes para executar os scripts
+### Arch Linux
+```bash
+cd
+mkdir git
+cd git
+git clone https://github.com/MalcolnLMR/teste.git
+cd teste
+python -m venv webscrap
+source webscrap/bin/activate
+pip install -r requirements.txt
+```
+
+## Teste 1 - Web Scrap
+Teste desenvolvida no `scrap.py`, arquivos baixados estão configurados no `.gitignore` para não subir arquivos desnecessários aos github.
+
+### Como executar
+```bash
+python scrap.py
+```
+
+### Resultado
+- `download_pdf/` contém os dois anexos em pdf
+- `out/` contém o arquivo `anexos_I_e_II.zip`
+
+## Teste 2 - Transformação de dados
+Teste desenvolvido no arquivo `data_extract.py`, arquivos criados também configurados no `.gitignore`.
+
+### Como executar
+Obrigatóriamente deve ser executado após o Teste 1.
+```bash
+python data_extract.py
+```
+
+### Resultados
+- `extracted_data/` contém o arquivo `Teste_Malcoln_Lucas.csv.zip`
+
+## Teste 3 - Banco de dados
+Teste desenvolvido nos arquivos `demo_contabil.sql`, `operadoras.sql` e `query_analitica.sql`. Feitos em arquivos diferentes a pedido do enunciado.
+
+### Como Executar
+1. Execute o seguinte script para realizar o download dos arquivos e tratar os dados para serem adicionados no banco de dados:
+```bash
+python data_cleanup.py
+```
+2. Instale um servidor SQL funcional no seu ambiente de desenvolvimento.
+3. Conecte-se como usuário root.
+4. Execute os seguintes comandos com o caminho absoluto da sua máquina:
+```bash
+source /home/malcolnlmr/git/teste-de-nivelamento/demo_contabil.sql # EXEMPLO! Troque para o caminho absoluto do seu repositório
+source /home/malcolnlmr/git/teste-de-nivelamento/operadoras_ativas.sql # EXEMPLO! Troque para o caminho absoluto do seu repositório
+source /home/malcolnlmr/git/teste-de-nivelamento/query_analitica.sql.sql # EXEMPLO! Troque para o caminho absoluto do seu repositório
+```
+mais detalhes da execução e instalação de dependencias na seção Metodologia do README.
+
+### Resultados
+
+```
+$ MariaDB [(none)]> source /home/malcolnlmr/git/teste-de-nivelamento/query_analitica.sql
++-----------------------------------------------------------------+---------------------+----------------+
+| Razao_Social                                                    | Nome_Fantasia       | Total_Despesas |
++-----------------------------------------------------------------+---------------------+----------------+
+| AMIL ASSISTÊNCIA MÉDICA INTERNACIONAL S.A.                      | AMIL                |  5420109387.50 |
+| MAIS SAUDE S/A                                                  |                     |  3320665176.65 |
+| CAIXA DE ASSISTÊNCIA DOS FUNCIONÁRIOS DO BANCO DO BRASIL        | CASSI               |  1916519985.23 |
+| HAPVIDA ASSISTENCIA MEDICA S.A.                                 | HAPVIDA             |  1853004624.60 |
+| UNIMED NACIONAL - COOPERATIVA CENTRAL                           | UNIMED NACIONAL     |  1810373107.65 |
+| UNIMED BELO HORIZONTE COOPERATIVA DE TRABALHO MÉDICO            | UNIMED BH           |  1495542160.01 |
+| PREVENT SENIOR PRIVATE OPERADORA DE SAÚDE LTDA                  | PREVENT SENIOR      |  1486262077.73 |
+| UNIMED DO EST. DO RJ FEDERAÇÃO EST. DAS COOPERATIVAS MÉDICAS    | UNIMED FERJ         |   960333156.54 |
+| UNIMED PORTO ALEGRE - COOPERATIVA MÉDICA LTDA.                  | UNIMED PORTO ALEGRE |   898071708.30 |
+| GEAP AUTOGESTÃO EM SAÚDE                                        | GEAP                |   798694938.92 |
++-----------------------------------------------------------------+---------------------+----------------+
+10 rows in set (2.446 sec)
+
++------------------------------------------------------------+---------------------+----------------+
+| Razao_Social                                               | Nome_Fantasia       | Total_Despesas |
++------------------------------------------------------------+---------------------+----------------+
+| AMIL ASSISTÊNCIA MÉDICA INTERNACIONAL S.A.                 | AMIL                | 20820818085.36 |
+| UNIMED DE SANTOS COOP DE TRAB MEDICO                       |                     | 15646249947.29 |
+| HAPVIDA ASSISTENCIA MEDICA S.A.                            | HAPVIDA             |  7755562753.15 |
+| CAIXA DE ASSISTÊNCIA DOS FUNCIONÁRIOS DO BANCO DO BRASIL   | CASSI               |  7459368017.21 |
+| UNIMED NACIONAL - COOPERATIVA CENTRAL                      | UNIMED NACIONAL     |  7002487899.10 |
+| PREVENT SENIOR PRIVATE OPERADORA DE SAÚDE LTDA             | PREVENT SENIOR      |  5920615078.62 |
+| UNIMED BELO HORIZONTE COOPERATIVA DE TRABALHO MÉDICO       | UNIMED BH           |  5411476065.42 |
+| GEAP AUTOGESTÃO EM SAÚDE                                   | GEAP                |  3435605702.55 |
+| UNIMED PORTO ALEGRE - COOPERATIVA MÉDICA LTDA.             | UNIMED PORTO ALEGRE |  3368044333.04 |
+| UNIMED CAMPINAS - COOPERATIVA DE TRABALHO MÉDICO           | UNIMED CAMPINAS     |  3059368303.48 |
++------------------------------------------------------------+---------------------+----------------+
+10 rows in set (3.225 sec)
+```
+
+## Teste 4 - API
+De longe o teste mais difícil de ser feito, foi desenvolvido nas pastas `frontend` e `backend`.
+
+### Como executar
+#### Backend
+vá até a pasta `backend` e execute o seguite comando para iniciar o servidor:
+```bash
+fastapi dev main.py
+```
+#### frontend
+vá até a pasta `frontend` e execute o segunte comando para iniciar o servidor:
+```bash
+npm install
+npm run dev
+```
+
+### Resultados
+#### Bateria de testes do POSTMAN para o backend
+![testes_unitarios](readme_assets/test_collection_results.png)
+
+#### Aplicação frontend com os resultados dos mesmos testes do POSTMAN
+![amil](readme_assets/amil_test.png)
+
+![unimed](readme_assets/unimed_test.png)
+
+# Metodologia
+
 Esse é uma documentação de qual foi minha linha de raciocínio para realizar o teste de nivelamento.
 
 ## Teste de Web Scraping
