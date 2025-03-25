@@ -143,3 +143,68 @@ $ MariaDB [(none)]> source /home/malcolnlmr/git/teste-de-nivelamento/query_anali
 +------------------------------------------------------------+---------------------+----------------+
 10 rows in set (3.225 sec)
 ```
+
+## Teste de API
+#### Instalção de requisitos
+Neste teste, será necessário a instalação do `node.js` para executar o `vue.js`:
+```Bash
+sudo pacman -S nodejs npm
+```
+E por conta da organização do projeto, o `backend` em python e o `frontend` em vue.js serão divididos em pastas com o mesmo nome. Falando primeiro do backend:
+```Bash
+source webscrap/bin/activate # Iniciar o ambiente virtual (se já não estiver ativo)
+
+pip install "fastapi[standard]" # Instalar biblioteca de backend
+
+mkdir backend # Criar a pasta
+cd backend # ir para a pasta
+
+touch main.py # Arquivo onde o servidor será executado 
+```
+O comando para inciar o servidor é:
+```bash
+fastapi dev main.py
+```
+Agora para o `frontend`:
+```bash
+cd ~/teste-de-nivelamento # Voltar para o root do projeto
+
+mkdir frontend
+
+npm create vue@latest
+```
+Para as especificações do projeto, use `frontend` como nome do projeto e pasta de instalação, vá para a pasta, e execute:
+```bash
+npm install
+npm install axios
+npm run dev
+```
+
+#### Configurando testes
+Após terminar de escrever o aplicativo, é pedido que "Elabore uma coleção no Postman para demonstrar o resultado", então, foi enviado 2 requisições para o servidor python, uma pesquisando Amil, e outra Unimed. Ambas com a seguinte descrição de testes:
+```javascript
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+pm.test("Response is JSON", function () {
+    pm.response.to.be.json;
+});
+
+pm.test("Results contain expected fields", function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData.length).to.be.above(0);
+    pm.expect(jsonData[0]).to.have.property("Nome_Fantasia");
+    pm.expect(jsonData[0]).to.have.property("Razao_Social");
+    pm.expect(jsonData[0]).to.have.property("Registro_ANS");
+});
+```
+e estes foram os resultados:
+
+![testes_unitarios](readme_assets/test_collection_results.png)
+
+A interface Web usando Vue.js ficou desta forma:
+
+![amil](readme_assets/amil_test.png)
+
+![unimed](readme_assets/unimed_test.png)
