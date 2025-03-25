@@ -74,3 +74,72 @@ source webscrap/bin/activate # Iniciar o ambiente virtual (se já não estiver a
 
 pip install pandas tabula-py JPype1
 ```
+
+## Teste de Banco de dados
+#### Instalção de requisitos
+Para esse exercício, começarei instalando um serviço de banco de dados, sendo o mais compatível e recomendado com o ambiente de testes, o `MariaDB`.
+```Bash
+sudo pacman -S mariadb
+
+mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+
+sudo systemctl enable --now mariadb.service
+```
+
+Não é recomendado, mas devido a natureza do teste, não será criado um usuário especifico para mexer com este banco de dados, logo, para conectar ao serviço do mariadb, basta usar o comando:
+
+```Bash
+sudo mariadb
+```
+
+#### Automação e tratar dados
+Para facilitar a inserção no banco de dados, optei por primeiro usar Python para tratar os CSVs baixados e assim juntar todos os arquivos necessários em um único csv, chamado `merged_data.csv`. Para executar o download dos dados e tratar as informações como erro no nome de arquivos, data escrito errado e decimal usando "," ao invés de ".", basta executar o seguinte script:
+```bash
+source webscrap/bin/activate # Iniciar o ambiente virtual (se já não estiver ativo)
+
+python data_cleanup.py
+```
+
+#### Adicionar arquivos ao banco de dados e pesquisa
+Para adicionar os arquivos, basta executar os comandos:
+```bash
+sudo mariadb # Entrar como root no banco de dados, aconselhável estar em um usuário com baixa permissão quando for para prod
+
+source /home/malcolnlmr/git/teste-de-nivelamento/demo_contabil.sql # EXEMPLO! Troque para o caminho absoluto do seu repositório
+source /home/malcolnlmr/git/teste-de-nivelamento/operadoras_ativas.sql # EXEMPLO! Troque para o caminho absoluto do seu repositório
+```
+e Executando o arquivo de busca `query_analitica.sql` teremos os sequintes resultados:
+```
+$ MariaDB [(none)]> source /home/malcolnlmr/git/teste-de-nivelamento/query_analitica.sql
++-----------------------------------------------------------------+---------------------+----------------+
+| Razao_Social                                                    | Nome_Fantasia       | Total_Despesas |
++-----------------------------------------------------------------+---------------------+----------------+
+| AMIL ASSISTÊNCIA MÉDICA INTERNACIONAL S.A.                      | AMIL                |  5420109387.50 |
+| MAIS SAUDE S/A                                                  |                     |  3320665176.65 |
+| CAIXA DE ASSISTÊNCIA DOS FUNCIONÁRIOS DO BANCO DO BRASIL        | CASSI               |  1916519985.23 |
+| HAPVIDA ASSISTENCIA MEDICA S.A.                                 | HAPVIDA             |  1853004624.60 |
+| UNIMED NACIONAL - COOPERATIVA CENTRAL                           | UNIMED NACIONAL     |  1810373107.65 |
+| UNIMED BELO HORIZONTE COOPERATIVA DE TRABALHO MÉDICO            | UNIMED BH           |  1495542160.01 |
+| PREVENT SENIOR PRIVATE OPERADORA DE SAÚDE LTDA                  | PREVENT SENIOR      |  1486262077.73 |
+| UNIMED DO EST. DO RJ FEDERAÇÃO EST. DAS COOPERATIVAS MÉDICAS    | UNIMED FERJ         |   960333156.54 |
+| UNIMED PORTO ALEGRE - COOPERATIVA MÉDICA LTDA.                  | UNIMED PORTO ALEGRE |   898071708.30 |
+| GEAP AUTOGESTÃO EM SAÚDE                                        | GEAP                |   798694938.92 |
++-----------------------------------------------------------------+---------------------+----------------+
+10 rows in set (2.446 sec)
+
++------------------------------------------------------------+---------------------+----------------+
+| Razao_Social                                               | Nome_Fantasia       | Total_Despesas |
++------------------------------------------------------------+---------------------+----------------+
+| AMIL ASSISTÊNCIA MÉDICA INTERNACIONAL S.A.                 | AMIL                | 20820818085.36 |
+| UNIMED DE SANTOS COOP DE TRAB MEDICO                       |                     | 15646249947.29 |
+| HAPVIDA ASSISTENCIA MEDICA S.A.                            | HAPVIDA             |  7755562753.15 |
+| CAIXA DE ASSISTÊNCIA DOS FUNCIONÁRIOS DO BANCO DO BRASIL   | CASSI               |  7459368017.21 |
+| UNIMED NACIONAL - COOPERATIVA CENTRAL                      | UNIMED NACIONAL     |  7002487899.10 |
+| PREVENT SENIOR PRIVATE OPERADORA DE SAÚDE LTDA             | PREVENT SENIOR      |  5920615078.62 |
+| UNIMED BELO HORIZONTE COOPERATIVA DE TRABALHO MÉDICO       | UNIMED BH           |  5411476065.42 |
+| GEAP AUTOGESTÃO EM SAÚDE                                   | GEAP                |  3435605702.55 |
+| UNIMED PORTO ALEGRE - COOPERATIVA MÉDICA LTDA.             | UNIMED PORTO ALEGRE |  3368044333.04 |
+| UNIMED CAMPINAS - COOPERATIVA DE TRABALHO MÉDICO           | UNIMED CAMPINAS     |  3059368303.48 |
++------------------------------------------------------------+---------------------+----------------+
+10 rows in set (3.225 sec)
+```

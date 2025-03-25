@@ -1,5 +1,4 @@
-import csv
-import os, requests, zipfile, pandas as pd
+import os, requests, zipfile, csv, pandas as pd
 
 def download_data():
     for i in range(1, 5):
@@ -13,7 +12,7 @@ def download_data():
             zip_ref.extractall("download_data")
         os.remove(f"download_data/{i}T2024.zip")
     
-    download_resource("https://dadosabertos.ans.gov.br/FTP/PDA/operadoras_de_plano_de_saude_ativas/Relatorio_cadop.csv", "download_data", "Relatorio_cadop.csv")
+    download_resource("https://dadosabertos.ans.gov.br/FTP/PDA/operadoras_de_plano_de_saude_ativas/Relatorio_cadop.csv", "data_sample", "Relatorio_cadop.csv")
     
     os.rename("download_data/2t2023.csv", "download_data/2T2023.csv")
 
@@ -59,6 +58,6 @@ def merge_data(save_folder="data_sample"):
     merged_df.to_csv(os.path.join(save_folder, "merged_data.csv"), index=False, sep=";", encoding="utf-8", quoting=csv.QUOTE_NONNUMERIC)
 
 if __name__ == "__main__":
-    #download_data()
+    download_data()
     merge_data()
     
