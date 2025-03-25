@@ -27,7 +27,7 @@ def get_pdf_link_scrapy(url):
             
             if debug: print(f"Link encontrado: {urljoin(url, link_xpath)}")
 
-            download_resource(urljoin(url, link_xpath), "download", "II" if "Anexo_II" in link_xpath else "I") 
+            download_resource(urljoin(url, link_xpath), "download_pdf", "II" if "Anexo_II" in link_xpath else "I") 
     return None
 
 def download_resource(url, save_folder=".", filecounter="I"):
@@ -64,7 +64,7 @@ def download_resource(url, save_folder=".", filecounter="I"):
 
 def compact_downloaded_files():
     if debug: print("Compactando arquivos")
-    shutil.make_archive("anexos_I_e_II", 'zip', "download")    
+    shutil.make_archive("anexos_I_e_II", 'zip', "download_pdf")    
     if debug: print("Arquivos compactados\n Finalizando programa")
 
 

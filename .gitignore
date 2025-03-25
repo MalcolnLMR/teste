@@ -3,6 +3,7 @@ scrapy/
 selenium/
 soup/
 download/
+download_pdf/
 anexos_I_e_II*
 
 extracted_data/
