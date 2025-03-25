@@ -12,7 +12,7 @@ app.add_middleware(
 )
 
 df = pd.read_csv(
-    '/home/malcolnlmr/git/teste-de-nivelamento/data_sample/Relatorio_cadop.csv',
+    '../data_sample/Relatorio_cadop.csv',
     sep=';',
     encoding='utf-8'
     )
